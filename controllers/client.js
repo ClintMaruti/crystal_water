@@ -37,7 +37,7 @@ const clientController = {
     newClient
       .save()
       .then((results) => {
-        res.status(201).json({ message: "One Client Added!", client: results });
+        res.status(201).json({ client: results });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
