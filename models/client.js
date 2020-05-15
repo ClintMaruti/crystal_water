@@ -12,7 +12,7 @@ const clientSchema = new Schema({
     required: "{PATH} is required",
   },
   phone_number: {
-    type: Number,
+    type: String,
     required: "{PATH} is required",
   },
   meter_no: {
