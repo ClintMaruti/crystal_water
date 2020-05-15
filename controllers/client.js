@@ -22,7 +22,7 @@ const clientController = {
       current_reading,
     } = req.body;
 
-    const units = (previous_reading - current_reading) * 100;
+    const units = (current_reading - previous_reading) * 100;
 
     const newClient = new Client({
       name,
@@ -45,24 +45,22 @@ const clientController = {
   },
 
   fetchAllClients: (req, res) => {
-    Client.find({})
-      .exec((err, clients) => {
-        if (err) {
-          res.status(500).json({ error: err.message });
-        }
-        res.status(200).json({ clients });
-      });
+    Client.find({}).exec((err, clients) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      }
+      res.status(200).json({ clients });
+    });
   },
 
   fetchOneClient: (req, res) => {
     const { id } = req.params;
-    Client.findById({ _id: id })
-      .exec((err, result) => {
-        if (err) {
-          res.status(404).json({ error: err.message });
-        }
-        res.status(200).json({ client: result });
-      });
+    Client.findById({ _id: id }).exec((err, result) => {
+      if (err) {
+        res.status(404).json({ error: err.message });
+      }
+      res.status(200).json({ client: result });
+    });
   },
 
   deletOneClient: (req, res) => {
