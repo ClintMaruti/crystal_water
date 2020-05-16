@@ -10,7 +10,7 @@ const clientController = {
       !req.body.previous_reading ||
       !req.body.current_reading
     ) {
-      res.status(400).json({ message: "Check Your Field Again!" });
+      res.status(400).send("Check Your Field Again!");
     }
 
     const {
@@ -37,19 +37,19 @@ const clientController = {
     newClient
       .save()
       .then((results) => {
-        res.status(201).json({ client: results });
+        res.status(201).send(results);
       })
       .catch((err) => {
-        res.status(500).json({ error: err.message });
+        res.status(500).send(err.message);
       });
   },
 
   fetchAllClients: (req, res) => {
     Client.find({}).exec((err, clients) => {
       if (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).send(err.message);
       }
-      res.status(200).json({ clients });
+      res.status(200).send(clients);
     });
   },
 
@@ -57,9 +57,9 @@ const clientController = {
     const { id } = req.params;
     Client.findById({ _id: id }).exec((err, result) => {
       if (err) {
-        res.status(404).json({ error: err.message });
+        res.status(404).send(err.message);
       }
-      res.status(200).json({ client: result });
+      res.status(200).send(result);
     });
   },
 
@@ -67,9 +67,9 @@ const clientController = {
     const { id } = req.params;
     Client.findByIdAndRemove({ _id: id }, (err, result) => {
       if (err) {
-        res.status(400).json({ error: err.message });
+        res.status(400).send(err.message);
       }
-      res.status(204).json({ message: "One Client Deleted!" });
+      res.status(204).send("One Client Deleted!");
     });
   },
 
@@ -81,11 +81,9 @@ const clientController = {
       { runValidators: true },
       (err, results) => {
         if (err) {
-          res.status(400).json({ error: err.message });
+          res.status(400).send(err.message);
         }
-        res
-          .status(202)
-          .json({ message: "One Client Updated!", client: results });
+        res.status(202).send(results);
       }
     );
   },
